@@ -18,6 +18,7 @@
 
 package org.bigbluebutton.api;
 
+import io.github.pixee.security.SystemCommand;
 import java.io.File;
 import java.net.URI;
 import java.util.*;
@@ -1241,7 +1242,7 @@ public class MeetingService implements MessageListener {
     log.info("Starting Meeting Service.");
     try {
       processMessage = true;
-      Process p = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", "cat /etc/bigbluebutton/bigbluebutton-release | cut -d '=' -f2"});
+      Process p = SystemCommand.runCommand(Runtime.getRuntime(), new String[]{"/bin/sh", "-c", "cat /etc/bigbluebutton/bigbluebutton-release | cut -d '=' -f2"});
 
       BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
