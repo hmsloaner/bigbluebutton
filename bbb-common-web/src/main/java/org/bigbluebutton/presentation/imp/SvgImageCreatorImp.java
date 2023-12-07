@@ -2,6 +2,7 @@ package org.bigbluebutton.presentation.imp;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -202,7 +203,7 @@ public class SvgImageCreatorImp implements SvgImageCreator {
             File tempPng = null;
             String basePresentationame = UUID.randomUUID().toString();
             try {
-                tempPng = File.createTempFile(basePresentationame + "-" + page, ".png");
+                tempPng = Files.createTempFile(basePresentationame + "-" + page, ".png").toFile();
             } catch (IOException ioException) {
                 // We should never fall into this if the server is correctly
                 // configured
