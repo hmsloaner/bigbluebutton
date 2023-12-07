@@ -1,5 +1,7 @@
 package org.bigbluebutton.presentation;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -183,7 +185,7 @@ public class PresentationUrlDownloadService {
 
         URL presUrl;
         try {
-            presUrl = new URL(redirectUrl);
+            presUrl = Urls.create(redirectUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         } catch (MalformedURLException e) {
             log.error("Malformed url=[{}] for meeting=[{}]", redirectUrl, meetingId, e);
             return null;
@@ -226,7 +228,7 @@ public class PresentationUrlDownloadService {
         URL url;
 
         try {
-            url = new URL(redirectUrl);
+            url = Urls.create(redirectUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             String protocol = url.getProtocol();
             String host = url.getHost();
 
