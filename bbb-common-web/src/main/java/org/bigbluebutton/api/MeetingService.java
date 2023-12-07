@@ -18,6 +18,7 @@
 
 package org.bigbluebutton.api;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.File;
 import java.net.URI;
 import java.util.*;
@@ -1245,7 +1246,7 @@ public class MeetingService implements MessageListener {
 
       BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-      String apiVersionFromFile = reader.readLine();
+      String apiVersionFromFile = BoundedLineReader.readLine(reader, 5_000_000);
 
       paramsProcessorUtil.setBbbVersion(apiVersionFromFile);
       Runnable messageReceiver = new Runnable() {
