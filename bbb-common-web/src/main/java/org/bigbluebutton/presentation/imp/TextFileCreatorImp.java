@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class TextFileCreatorImp implements TextFileCreator {
       File file = new File(dest);
       Writer writer = null;
       try {
-        writer = new BufferedWriter(new FileWriter(file));
+        writer = Files.newBufferedWriter(file.toPath());
         writer.write(text);
       } catch (IOException e) {
         log.error("Error: ", e);
