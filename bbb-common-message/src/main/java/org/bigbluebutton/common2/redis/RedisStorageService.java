@@ -180,6 +180,6 @@ public class RedisStorageService extends RedisAwareCommunicator {
         BaseRedisCommands command = connection.sync();
         String response = command.ping();
 
-        return response.equals("PONG");
+        return "PONG".equals(response);
     }
 }

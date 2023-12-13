@@ -233,7 +233,7 @@ public class PresentationUrlDownloadService {
             String host = url.getHost();
 
             if(insertDocumentSupportedProtocols.stream().noneMatch(p -> p.equalsIgnoreCase(protocol))) {
-                if(insertDocumentSupportedProtocols.size() == 1 && insertDocumentSupportedProtocols.get(0).equalsIgnoreCase("all")) {
+                if(insertDocumentSupportedProtocols.size() == 1 && "all".equalsIgnoreCase(insertDocumentSupportedProtocols.get(0))) {
                     log.warn("Warning: All protocols are supported for presentation download. It is recommended to only allow HTTPS.");
                 } else {
                     log.error("Invalid protocol [{}]", protocol);

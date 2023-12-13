@@ -74,7 +74,7 @@ public class ExampleClient {
             boolean notDone = true;
             while(notDone){
                 String Input1 = myInput.next();
-                if(Input1.equalsIgnoreCase("q")){
+                if("q".equalsIgnoreCase(Input1)){
                     notDone = false;
                 }
                 Thread.sleep( 25000 );

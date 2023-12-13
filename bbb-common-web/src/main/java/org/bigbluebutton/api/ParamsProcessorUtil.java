@@ -172,19 +172,19 @@ public class ParamsProcessorUtil {
         keywordList.add(SERVER_URL);
 
         for (String keyword : keywordList) {
-            if (keyword.equals(DIAL_NUM)) {
+            if (DIAL_NUM.equals(keyword)) {
                 welcomeMessage = welcomeMessage.replaceAll(
                         Pattern.quote(DIAL_NUM),
                         Matcher.quoteReplacement(dialNumber));
-            } else if (keyword.equals(CONF_NUM)) {
+            } else if (CONF_NUM.equals(keyword)) {
                 welcomeMessage = welcomeMessage.replaceAll(
                         Pattern.quote(CONF_NUM),
                         Matcher.quoteReplacement(formatConfNum(telVoice)));
-            } else if (keyword.equals(CONF_NAME)) {
+            } else if (CONF_NAME.equals(keyword)) {
                 welcomeMessage = welcomeMessage.replaceAll(
                         Pattern.quote(CONF_NAME),
                         Matcher.quoteReplacement(ParamsUtil.escapeHTMLTags(meetingName)));
-            } else if (keyword.equals(SERVER_URL)) {
+            } else if (SERVER_URL.equals(keyword)) {
                 welcomeMessage = welcomeMessage.replaceAll(
                         Pattern.quote(SERVER_URL),
                         Matcher.quoteReplacement(defaultServerUrl));

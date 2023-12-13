@@ -302,7 +302,7 @@ public class XmlServiceImpl implements XmlService {
         try {
             setup();
 
-            if(response == null || response.equals("")) {
+            if(response == null || "".equals(response)) {
                 return null;
             }
 
@@ -406,7 +406,7 @@ public class XmlServiceImpl implements XmlService {
             Document document = builder.parse(new ByteArrayInputStream(xml.getBytes()));
             Recording recording = parseRecordingDocument(document);
 
-            if (recording.getRecordId() == null || recording.getRecordId().equals(""))
+            if (recording.getRecordId() == null || "".equals(recording.getRecordId()))
                 recording.setRecordId(recordId);
 
             return recording;
@@ -431,7 +431,7 @@ public class XmlServiceImpl implements XmlService {
             Element meeting = (Element) recordingDocument.getElementsByTagName("meeting").item(0);
             externalId = meeting.getAttribute("externalId");
             name = meeting.getAttribute("name");
-            if (id == null || id.equals(""))
+            if (id == null || "".equals(id))
                 id = meeting.getAttribute("id");
         }
 

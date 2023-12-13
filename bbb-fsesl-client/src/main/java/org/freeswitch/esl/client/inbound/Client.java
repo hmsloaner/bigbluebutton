@@ -232,7 +232,7 @@ public class Client
     public CommandResponse setEventSubscriptions( String format, String events )
     {
         // temporary hack
-        if ( ! format.equals( "plain" ) ) {
+        if ( ! "plain".equals (format ) ) {
             throw new IllegalStateException( "Only 'plain' event format is supported at present" );
         }
         
@@ -436,7 +436,7 @@ public class Client
              *  Use a different worker thread pool for async job results than for event driven
              *  events to keep the latency as low as possible.
              */
-            if ( event.getEventName().equals( "BACKGROUND_JOB" ) ) {
+            if ( "BACKGROUND_JOB".equals (event.getEventName() ) ) {
                 for ( final IEslEventListener listener : eventListeners ) {
                     backgroundJobListenerExecutor.execute( new Runnable() {
                         public void run() {
@@ -457,7 +457,7 @@ public class Client
                                  * Custom extra parsing to get conference Events for BigBlueButton / FreeSwitch intergration
                                  */
                                 //FIXME: make the conference headers constants
-                                if (event.getEventSubclass().equals("conference::maintenance")) {
+                                if ("conference::maintenance".equals(event.getEventSubclass())) {
                                     Map<String, String> eventHeaders = event.getEventHeaders();
                                     String eventFunc = eventHeaders.get("Event-Calling-Function");
                                     String uniqueId = eventHeaders.get("Caller-Unique-ID");
@@ -480,52 +480,52 @@ public class Client
 **/
                                     if (eventFunc == null || eventAction == null) {
                                         //Noop...
-                                    } else if (eventAction.equals("conference-create")) {
+                                    } else if ("conference-create".equals(eventAction)) {
                                         listener.conferenceEventAction(uniqueId, confName, confSize, eventAction, event);
                                         return;
-                                    } else if (eventAction.equals("conference-destroy")) {
+                                    } else if ("conference-destroy".equals(eventAction)) {
                                         listener.conferenceEventAction(uniqueId, confName, confSize, eventAction, event);
                                         return;
-                                    } else if (eventFunc.equals("conference_thread_run")) {
+                                    } else if ("conference_thread_run".equals(eventFunc)) {
                                         System.out.println("##### Client conference_thread_run");
                                         listener.conferenceEventThreadRun(uniqueId, confName, confSize, event);
                                         return;
-                                    } else if (eventFunc.equals("member_add_file_data")) {
+                                    } else if ("member_add_file_data".equals(eventFunc)) {
                                         System.out.println("##### Client member_add_file_data");
                                         listener.conferenceEventPlayFile(uniqueId, confName, confSize, event);
                                         return;
-                                    } else if (eventFunc.equals("conf_api_sub_transfer") || eventFunc.equals("conference_api_sub_transfer")) {
+                                    } else if ("conf_api_sub_transfer".equals(eventFunc) || "conference_api_sub_transfer".equals(eventFunc)) {
                                         //Member transfered to another conf...
                                         listener.conferenceEventTransfer(uniqueId, confName, confSize, event);
                                         return;
-                                    } else if (eventFunc.equals("conference_add_member") || eventFunc.equals("conference_member_add")) {
+                                    } else if ("conference_add_member".equals(eventFunc) || "conference_member_add".equals(eventFunc)) {
                                         System.out.println("##### Client conference_add_member");
                                         listener.conferenceEventJoin(uniqueId, confName, confSize, event);
                                         return;
-                                    } else if (eventFunc.equals("conference_del_member") || eventFunc.equals("conference_member_del")) {
+                                    } else if ("conference_del_member".equals(eventFunc) || "conference_member_del".equals(eventFunc)) {
                                         System.out.println("##### Client conference_del_member");
                                         listener.conferenceEventLeave(uniqueId, confName, confSize, event);
                                         return;
-                                    } else if (eventFunc.equals("conf_api_sub_mute") || eventFunc.equals("conference_api_sub_mute")) {
+                                    } else if ("conf_api_sub_mute".equals(eventFunc) || "conference_api_sub_mute".equals(eventFunc)) {
                                         listener.conferenceEventMute(uniqueId, confName, confSize, event);
                                         return;
-                                    } else if (eventFunc.equals("conf_api_sub_unmute") || eventFunc.equals("conference_api_sub_unmute")) {
+                                    } else if ("conf_api_sub_unmute".equals(eventFunc) || "conference_api_sub_unmute".equals(eventFunc)) {
                                         listener.conferenceEventUnMute(uniqueId, confName, confSize, event);
                                         return;
-                                    } else if (eventFunc.equals("conference_record_thread_run")) {
+                                    } else if ("conference_record_thread_run".equals(eventFunc)) {
                                         System.out.println("##### Client conference_record_thread_run");
                                         listener.conferenceEventRecord(uniqueId, confName, confSize, event);
                                         return;
-                                    } else if (eventFunc.equals("conference_loop_input")) {
+                                    } else if ("conference_loop_input".equals(eventFunc)) {
                                         listener.conferenceEventAction(uniqueId, confName, confSize, eventAction, event);
                                         return;
-                                    } else if (eventFunc.equals("conference_member_set_floor_holder")) {
+                                    } else if ("conference_member_set_floor_holder".equals(eventFunc)) {
                                         listener.conferenceEventAction(uniqueId, confName, confSize, eventAction, event);
                                         return;
-                                    } else if (eventFunc.equals("conference_video_set_floor_holder")) {
+                                    } else if ("conference_video_set_floor_holder".equals(eventFunc)) {
                                         listener.conferenceEventAction(uniqueId, confName, confSize, eventAction, event);
                                         return;
-                                    } else if (eventFunc.equals("stop_talking_handler")) {
+                                    } else if ("stop_talking_handler".equals(eventFunc)) {
                                         listener.conferenceEventAction(uniqueId, confName, confSize, eventAction, event);
                                         return;
                                     }  else {

@@ -66,7 +66,7 @@ public class PresentationFileProcessor {
     private void processMakePresentationDownloadableMsg(UploadedPresentation pres) {
         try {
             File presentationFileDir = pres.getUploadedFile().getParentFile();
-            if (!pres.getFilenameConverted().equals("")) {
+            if (!"".equals(pres.getFilenameConverted())) {
                 String fileExtensionConverted = FilenameUtils.getExtension(pres.getFilenameConverted());
                 Util.makePresentationDownloadable(presentationFileDir, pres.getId(), pres.isDownloadable(),
                         fileExtensionConverted);
