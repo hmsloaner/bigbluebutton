@@ -14,7 +14,7 @@ public class IsBooleanValidator implements ConstraintValidator<IsBooleanConstrai
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
-        if(value == null || value.equals("")) {
+        if(value == null || "".equals(value)) {
             return true;
         }
 

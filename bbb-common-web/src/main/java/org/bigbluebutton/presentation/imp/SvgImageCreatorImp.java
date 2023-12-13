@@ -316,7 +316,7 @@ public class SvgImageCreatorImp implements SvgImageCreator {
         String rawCommand = "pdftocairo -r " + this.svgResolutionPpi + " " + format + (analyze ? "" : " -singlefile");
 
         //Resize png resolution to avoid too large files
-        if(format.equals("-png") && this.pngWidthRasterizedSlides != 0) {
+        if("-png".equals(format) && this.pngWidthRasterizedSlides != 0) {
             rawCommand += " -scale-to-x " + this.pngWidthRasterizedSlides + " -scale-to-y -1 ";
         }
 

@@ -111,7 +111,7 @@ public final class SupportedFileTypes {
 	public static Boolean isPresentationMimeTypeValid(File pres, String fileExtension) {
 		String mimeType = detectMimeType(pres);
 
-		if (mimeType.equals("")) {
+		if ("".equals(mimeType)) {
 			return false;
 		}
 

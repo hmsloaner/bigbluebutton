@@ -67,9 +67,9 @@ public class ESLEventListener implements IEslEventListener {
         String callerId = this.getCallerId(event);
         String callerIdName = this.getCallerIdNameFromEvent(event);
         String channelCallState = this.getChannelCallState(headers);
-        boolean muted = headers.get("Speak").equals("true") ? false : true; //Was inverted which was causing a State issue
-        boolean speaking = headers.get("Talking").equals("true") ? true : false;
-        boolean hold = channelCallState.equals(CHANNEL_CALLSTATE_HELD);
+        boolean muted = "true".equals(headers.get("Speak")) ? false : true; //Was inverted which was causing a State issue
+        boolean speaking = "true".equals(headers.get("Talking")) ? true : false;
+        boolean hold = CHANNEL_CALLSTATE_HELD.equals(channelCallState);
 
         String voiceUserId = callerIdName;
 
@@ -171,21 +171,21 @@ public class ESLEventListener implements IEslEventListener {
             return;
         }
 
-        if (action.equals(START_TALKING_EVENT)) {
+        if (START_TALKING_EVENT.equals(action)) {
             Integer memberId = this.getMemberId(event);
             VoiceUserTalkingEvent pt = new VoiceUserTalkingEvent(memberId.toString(), confName, true);
             conferenceEventListener.handleConferenceEvent(pt);          
-        } else if (action.equals(STOP_TALKING_EVENT)) {
+        } else if (STOP_TALKING_EVENT.equals(action)) {
             Integer memberId = this.getMemberId(event);
             VoiceUserTalkingEvent pt = new VoiceUserTalkingEvent(memberId.toString(), confName, false);
             conferenceEventListener.handleConferenceEvent(pt);          
-        } else if (action.equals(CONFERENCE_CREATED_EVENT)) {
+        } else if (CONFERENCE_CREATED_EVENT.equals(action)) {
             VoiceConfRunningEvent pt = new VoiceConfRunningEvent(confName, true);
             conferenceEventListener.handleConferenceEvent(pt);
-        } else if (action.equals(CONFERENCE_DESTROYED_EVENT)) {
+        } else if (CONFERENCE_DESTROYED_EVENT.equals(action)) {
             VoiceConfRunningEvent pt = new VoiceConfRunningEvent(confName, false);
             conferenceEventListener.handleConferenceEvent(pt);
-        } else if (action.equals(FLOOR_CHANGE_EVENT)) {
+        } else if (FLOOR_CHANGE_EVENT.equals(action)) {
             String holderMemberId = this.getNewFloorHolderMemberIdFromEvent(event);
             String oldHolderMemberId = this.getOldFloorHolderMemberIdFromEvent(event);
             String floorTimestamp = event.getEventHeaders().get("Event-Date-Timestamp");
@@ -214,13 +214,13 @@ public class ESLEventListener implements IEslEventListener {
             return;
         }
 
-        if (action.equals(START_RECORDING_EVENT)) {
+        if (START_RECORDING_EVENT.equals(action)) {
             VoiceStartRecordingEvent sre = new VoiceStartRecordingEvent(confName, true);
             sre.setRecordingFilename(getRecordFilenameFromEvent(event));
             sre.setTimestamp(genTimestamp().toString());
 
             conferenceEventListener.handleConferenceEvent(sre);
-        } else if (action.equals(STOP_RECORDING_EVENT)) {
+        } else if (STOP_RECORDING_EVENT.equals(action)) {
             VoiceStartRecordingEvent sre = new VoiceStartRecordingEvent(confName, false);
             sre.setRecordingFilename(getRecordFilenameFromEvent(event));
             sre.setTimestamp(genTimestamp().toString());
@@ -257,7 +257,7 @@ public class ESLEventListener implements IEslEventListener {
          System.out.println("<<<=== #####");
         **/
 
-        if (event.getEventName().equals("HEARTBEAT")) {
+        if ("HEARTBEAT".equals(event.getEventName())) {
             Gson gson = new Gson();
             String json = gson.toJson(event.getEventHeaders());
             //log.info(json);
@@ -273,7 +273,7 @@ public class ESLEventListener implements IEslEventListener {
             FreeswitchHeartbeatEvent hbeatEvent = new FreeswitchHeartbeatEvent(hb);
             conferenceEventListener.handleConferenceEvent(hbeatEvent);
 
-        } else if (event.getEventName().equals( "CHANNEL_EXECUTE" )) {
+        } else if ("CHANNEL_EXECUTE".equals (event.getEventName() )) {
             Map<String, String> eventHeaders = event.getEventHeaders();
 
             String application = (eventHeaders.get("Application") == null) ? "" : eventHeaders.get("Application");
@@ -444,14 +444,14 @@ public class ESLEventListener implements IEslEventListener {
                         );
                 conferenceEventListener.handleConferenceEvent(csEvent);
             }
-        } else if (event.getEventName().equals(CHANNEL_CALLSTATE_EVENT)) {
+        } else if (CHANNEL_CALLSTATE_EVENT.equals(event.getEventName())) {
             Map<String, String> eventHeaders = event.getEventHeaders();
             String channelCallState = this.getChannelCallState(eventHeaders);
             String originalChannelCallState = eventHeaders.get("Original-Channel-Call-State");
             if (channelCallState == null
                     || originalChannelCallState == null
                     || channelCallState.equals(originalChannelCallState)
-                    || !(channelCallState.equals(CHANNEL_CALLSTATE_HELD) || channelCallState.equals(CHANNEL_CALLSTATE_ACTIVE))) {
+                    || !(CHANNEL_CALLSTATE_HELD.equals(channelCallState) || CHANNEL_CALLSTATE_ACTIVE.equals(channelCallState))) {
                 // No call state info, or no change in call state, or not a call state we care about
                 return;
             }
@@ -462,7 +462,7 @@ public class ESLEventListener implements IEslEventListener {
                 return;
             }
 
-            Boolean hold = channelCallState.equals(CHANNEL_CALLSTATE_HELD);
+            Boolean hold = CHANNEL_CALLSTATE_HELD.equals(channelCallState);
             String uuid = this.getMemberUUIDFromEvent(event);
             String conference = eventHeaders.get("Caller-Destination-Number");
             Matcher callerDestNumberMatcher = ECHO_TEST_DEST_PATTERN.matcher(conference);
@@ -555,7 +555,7 @@ public class ESLEventListener implements IEslEventListener {
 
     private String getOldFloorHolderMemberIdFromEvent(EslEvent e) {
         String oldFloorHolder = e.getEventHeaders().get("Old-ID");
-        if(oldFloorHolder == null || oldFloorHolder.equalsIgnoreCase("none")) {
+        if(oldFloorHolder == null || "none".equalsIgnoreCase(oldFloorHolder)) {
             oldFloorHolder= "";
         }
         return oldFloorHolder;
@@ -563,7 +563,7 @@ public class ESLEventListener implements IEslEventListener {
 
     private String getNewFloorHolderMemberIdFromEvent(EslEvent e) {
         String newHolder = e.getEventHeaders().get("New-ID");
-        if(newHolder == null || newHolder.equalsIgnoreCase("none")) {
+        if(newHolder == null || "none".equalsIgnoreCase(newHolder)) {
             newHolder = "";
         }
         return newHolder;

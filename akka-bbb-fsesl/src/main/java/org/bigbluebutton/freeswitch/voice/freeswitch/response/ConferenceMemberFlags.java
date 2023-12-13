@@ -45,15 +45,15 @@ public class ConferenceMemberFlags {
     }
 
     void setCanSpeak(String tempVal) {
-        canSpeak = tempVal.equals("true") ? true : false;
+        canSpeak = "true".equals(tempVal) ? true : false;
     }
 
     void setTalking(String tempVal) {
-        talking = tempVal.equals("true") ? true : false;
+        talking = "true".equals(tempVal) ? true : false;
     }
 
     void setHold(String tempVal) {
-        hold = tempVal.equals("true") ? true : false;
+        hold = "true".equals(tempVal) ? true : false;
     }
 
     boolean getHold() {

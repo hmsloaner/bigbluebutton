@@ -28,7 +28,7 @@ public class RecordingApp {
         while (i < args.length && args[i].startsWith("-")) {
             arg = args[i++];
 
-            if (arg.equals("--help")) {
+            if ("--help".equals(arg)) {
                 printUsage();
                 return;
             }
@@ -44,9 +44,9 @@ public class RecordingApp {
                     export = false;
                     if (i < args.length) {
                         String shouldPersist = args[i++];
-                        if (shouldPersist.equalsIgnoreCase("true"))
+                        if ("true".equalsIgnoreCase(shouldPersist))
                             persist = true;
-                        else if (shouldPersist.equalsIgnoreCase("false"))
+                        else if ("false".equalsIgnoreCase(shouldPersist))
                             persist = false;
                         else {
                             System.out.println("Error: Could not parse persist argument");
@@ -154,7 +154,7 @@ public class RecordingApp {
                 String path = getResponse(
                         "Please enter the path to the recording metadata.xml file (enter q to quit): ");
 
-                if (path.equalsIgnoreCase("q") || path.equalsIgnoreCase("quit"))
+                if ("q".equalsIgnoreCase(path) || "quit".equalsIgnoreCase(path))
                     break;
 
                 String recordingId = getResponse("Please enter the ID of the recording: ");
@@ -178,7 +178,7 @@ public class RecordingApp {
             do {
                 String response = getResponse(
                         "Please enter the ID of the recording you would like to export (enter q to quit): ");
-                if (response.equalsIgnoreCase("q") || response.equalsIgnoreCase("quit"))
+                if ("q".equalsIgnoreCase(response) || "quit".equalsIgnoreCase(response))
                     break;
                 handler.exportRecording(response, path);
             } while (true);

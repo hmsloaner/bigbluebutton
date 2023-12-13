@@ -93,20 +93,20 @@ public class XMLResponseConferenceListParser extends DefaultHandler {
         //inFlags = false;
         tempVal = "";
 
-        if(qName.equalsIgnoreCase("member")) {
+        if("member".equalsIgnoreCase(qName)) {
             String memberType = attributes.getValue("type");
             //create a new instance of ConferenceMember
             tempMember = new ConferenceMember();
             tempMember.setMemberType(memberType);
         }
 
-        if(qName.equalsIgnoreCase("flags")) {
+        if("flags".equalsIgnoreCase(qName)) {
             //create a new instance of ConferenceMember
             tempFlags = new ConferenceMemberFlags();
             inFlags = true;
         }
 
-        if(qName.equalsIgnoreCase("conference")) {
+        if("conference".equalsIgnoreCase(qName)) {
             room = attributes.getValue("name");
         }
     }
@@ -120,33 +120,33 @@ public class XMLResponseConferenceListParser extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if(qName.equalsIgnoreCase("member")) {
+        if("member".equalsIgnoreCase(qName)) {
             //add it to the list
             myConfrenceMembers.add(tempMember);
-        }else if(qName.equalsIgnoreCase("flags")) {
+        }else if("flags".equalsIgnoreCase(qName)) {
             tempMember.setFlags(tempFlags);
             inFlags = false;
         }else if(inFlags) {
-            if (qName.equalsIgnoreCase("can_speak")) {
+            if ("can_speak".equalsIgnoreCase(qName)) {
                 tempFlags.setCanSpeak(tempVal);
-            }else if (qName.equalsIgnoreCase("talking")) {
+            }else if ("talking".equalsIgnoreCase(qName)) {
                 tempFlags.setTalking(tempVal);
-            } else if (qName.equalsIgnoreCase("hold")) {
+            } else if ("hold".equalsIgnoreCase(qName)) {
                 tempFlags.setHold(tempVal);
             }
-        }else if (qName.equalsIgnoreCase("id")) {
+        }else if ("id".equalsIgnoreCase(qName)) {
             try {
                 tempMember.setId(Integer.parseInt(tempVal));
             } catch(NumberFormatException nfe) {
                 
             }
-        }else if (qName.equalsIgnoreCase("uuid")) {
+        }else if ("uuid".equalsIgnoreCase(qName)) {
             tempMember.setUUID(tempVal);
-        }else if (qName.equalsIgnoreCase("caller_id_name")) {
+        }else if ("caller_id_name".equalsIgnoreCase(qName)) {
             tempMember.setCallerIdName(tempVal);
-        }else if (qName.equalsIgnoreCase("caller_id_number")) {
+        }else if ("caller_id_number".equalsIgnoreCase(qName)) {
             tempMember.setCallerId(tempVal);
-        }else if (qName.equalsIgnoreCase("join_time")) {
+        }else if ("join_time".equalsIgnoreCase(qName)) {
             if (tempMember.getMemberType().equalsIgnoreCase("caller")) {
                 try {
                     tempMember.setJoinTime(Integer.parseInt(tempVal));
@@ -161,13 +161,13 @@ public class XMLResponseConferenceListParser extends DefaultHandler {
                 }
             }
 
-        }else if (qName.equalsIgnoreCase("last_talking")) {
+        }else if ("last_talking".equalsIgnoreCase(qName)) {
             try {
                 tempMember.setLastTalking(Integer.parseInt(tempVal));
             } catch(NumberFormatException nfe) {
                 
             }
-        } else if (qName.equalsIgnoreCase("record_path")) {
+        } else if ("record_path".equalsIgnoreCase(qName)) {
             tempMember.setRecordPath(tempVal);
         }
     }

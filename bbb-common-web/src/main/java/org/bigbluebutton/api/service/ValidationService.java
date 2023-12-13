@@ -234,7 +234,7 @@ public class ValidationService {
         boolean firstParam = true;
         for(String key: keys) {
 
-            if(key.equals("checksum")) {
+            if("checksum".equals(key)) {
                 continue;
             }
 
