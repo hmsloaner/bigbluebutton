@@ -18,6 +18,7 @@
 
 package org.bigbluebutton.api;
 
+import io.github.pixee.security.SystemCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,7 @@ public class HTML5LoadBalancingService {
             this.list = new ArrayList<HTML5ProcessLine>();
             Process p1 = Runtime.getRuntime().exec(new String[]{"ps", "-u", "meteor", "-o", "pcpu,cmd="});
             InputStream input1 = p1.getInputStream();
-            Process p2 = Runtime.getRuntime().exec(new String[]{"grep", HTML5ProcessLine.BBB_HTML5_PROCESS_IDENTIFIER});
+            Process p2 = SystemCommand.runCommand(Runtime.getRuntime(), new String[]{"grep", HTML5ProcessLine.BBB_HTML5_PROCESS_IDENTIFIER});
             OutputStream output = p2.getOutputStream();
             IOUtils.copy(input1, output);
             output.close(); // signals grep to finish
